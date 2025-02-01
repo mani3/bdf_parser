@@ -22,10 +22,6 @@ fn main() -> io::Result<()> {
     println!("Font Name: {}", bdf.font);
     println!("Character Count: {}", bdf.count);
 
-    if let Some(bitmap) = bdf.get_bitmap(65) {
-        println!("Bitmap for character 65: {:?}", bitmap);
-    }
-
     let pixel = "＠"; // 1 の部分に表示する文字
     let space = "　"; // 0 の部分に表示する文字
 
