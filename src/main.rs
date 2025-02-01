@@ -32,7 +32,7 @@ fn main() -> io::Result<()> {
             println!("Bitmap for character {}: {:?}", code, bitmap);
             println!("{}", render_bitmap(bitmap, pixel, space));
         } else {
-            eprintln!("Character '{}' (JIS code: {}) not found in BDF.", c, code);
+            eprintln!("Character '{}' (code: {}) not found in BDF.", c, code);
         }
     }
 

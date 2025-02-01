@@ -1,17 +1,17 @@
-use bdf_parser::bdf::glyph::Glyph; // `bdf_parser` クレートの `Glyph` を使用
+use bdf_parser::bdf::glyph::Glyph;
 
 #[test]
 fn test_glyph_creation() {
-    let glyph = Glyph::new(65); // 'A' の Unicode コードポイント
+    let glyph = Glyph::new("A".to_string());
 
-    assert_eq!(glyph.char, 65);
-    assert_eq!(glyph.encoding, 0); // 初期値は 0
-    assert!(glyph.bitmap.is_empty()); // 初期値は空の Vec
+    assert_eq!(glyph.char, "A");
+    assert_eq!(glyph.encoding, 0);
+    assert!(glyph.bitmap.is_empty());
 }
 
 #[test]
 fn test_glyph_encoding() {
-    let mut glyph = Glyph::new(66);
+    let mut glyph = Glyph::new("B".to_string());
     glyph.encoding = 66;
 
     assert_eq!(glyph.encoding, 66);
@@ -19,7 +19,7 @@ fn test_glyph_encoding() {
 
 #[test]
 fn test_glyph_bitmap() {
-    let mut glyph = Glyph::new(67);
+    let mut glyph = Glyph::new("C".to_string());
     glyph.bitmap = vec![
         "00".to_string(),
         "18".to_string(),
