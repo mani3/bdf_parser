@@ -1,6 +1,5 @@
 use rust_embed::RustEmbed;
 use std::env;
-use std::fs::File;
 use std::io::{self, BufReader, Cursor};
 
 use bdf_parser::bdf::{
@@ -30,15 +29,16 @@ fn main() -> io::Result<()> {
 
         let pixel = args.get(2).and_then(|s| s.chars().next()).unwrap_or('＠');
         let space = args.get(3).and_then(|s| s.chars().next()).unwrap_or('　');
-        let mut bitmaps = Vec::new();
 
-        for c in args[1].chars() {
-            if let Some(bitmap) = bdf.get_bitmap(c as u32) {
-                bitmaps.push(bitmap);
-            } else {
-                eprintln!("Warning: Character '{}' not found in BDF.", c);
+        let bitmaps: Vec<_> = args[1].chars().filter_map(|c| {
+            match bdf.get_bitmap(c as u32) {
+                Some(bitmap) => Some(bitmap),
+                None => {
+                eprintln!("Warning: Character '{}' (U+{:04X}) not found in BDF.", c, c as u32);
+                    None
+                }
             }
-        }
+        }).collect();
 
         if bitmaps.is_empty() {
             eprintln!("No valid characters found.");
