@@ -1,4 +1,3 @@
-
 pub fn render_bitmap(bitmap: &[String], pixel: &str, space: &str) -> String {
     let mut result = String::new();
     for bin_str in bitmap {
@@ -8,7 +7,6 @@ pub fn render_bitmap(bitmap: &[String], pixel: &str, space: &str) -> String {
     }
     result
 }
-
 
 pub fn concat_bitmaps(bitmaps: Vec<&Vec<String>>) -> Vec<String> {
     let height = bitmaps.iter().map(|bmp| bmp.len()).max().unwrap_or(0);

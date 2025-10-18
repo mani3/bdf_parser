@@ -112,6 +112,9 @@ impl BdfParser {
     }
 
     pub fn get_bitmap(&self, decimal: u32) -> Option<&Vec<String>> {
-        self.glyphs.iter().find(|g| g.encoding == decimal).map(|g| &g.bitmap)
+        self.glyphs
+            .iter()
+            .find(|g| g.encoding == decimal)
+            .map(|g| &g.bitmap)
     }
 }
