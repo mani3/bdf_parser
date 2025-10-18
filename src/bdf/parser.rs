@@ -118,3 +118,9 @@ impl BdfParser {
             .map(|g| &g.bitmap)
     }
 }
+
+impl Default for BdfParser {
+    fn default() -> Self {
+        Self::new()
+    }
+}
