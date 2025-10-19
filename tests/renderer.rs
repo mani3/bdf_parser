@@ -1,8 +1,9 @@
-use bdf_parser::bdf::renderer::{render_bitmap, concat_bitmaps};
+use bdf_parser::bdf::renderer::{concat_bitmaps, render_bitmap};
 
 fn to_bin(hex: &str) -> String {
     // 16進→2進（ゼロ埋め: 4 * 桁数）
-    format!("{:0width$b}",
+    format!(
+        "{:0width$b}",
         u32::from_str_radix(hex, 16).unwrap_or(0),
         width = hex.len() * 4
     )
@@ -11,8 +12,8 @@ fn to_bin(hex: &str) -> String {
 #[test]
 fn concat_bitmaps_handles_different_heights_and_right_padding() {
     // 左: 高さ2, 右: 高さ3
-    let left  = vec!["1111".to_string(), "0000".to_string()];
-    let right = vec!["01".to_string(),  "10".to_string(),  "11".to_string()];
+    let left = vec!["1111".to_string(), "0000".to_string()];
+    let right = vec!["01".to_string(), "10".to_string(), "11".to_string()];
     let out = concat_bitmaps(vec![&left, &right]);
 
     // 右の高さ(3)に合わせる
@@ -21,10 +22,10 @@ fn concat_bitmaps_handles_different_heights_and_right_padding() {
     // 期待値は「ゼロ埋め2進化→連結」
     assert_eq!(out[0], to_bin("1111") + &to_bin("01")); // "0001000100010001" + "00000001"
     assert_eq!(out[1], to_bin("0000") + &to_bin("10")); // "0000000000000000" + "00010000"
-    // 3行目は左の「下パディング（ゼロ）」+ 右3行目
+                                                        // 3行目は左の「下パディング（ゼロ）」+ 右3行目
     assert_eq!(
         out[2],
-        "0".repeat(left[0].len() * 4) + &to_bin("11")    // "0000"の16ビット分のゼロ + "00000011"
+        "0".repeat(left[0].len() * 4) + &to_bin("11") // "0000"の16ビット分のゼロ + "00000011"
     );
 }
 
