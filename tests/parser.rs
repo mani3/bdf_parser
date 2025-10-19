@@ -39,3 +39,21 @@ ENDFONT";
     assert_eq!(glyph.bitmap.len(), 8);
     assert_eq!(glyph.bitmap[3], "42");
 }
+
+#[test]
+fn parse_handles_unknown_keys_outside_properties_and_bitmap() {
+    // 未知のキーがプロパティ/ビットマップ以外の状況で来ても落ちないことを確認
+    let bdf = r#"
+STARTFONT 2.1
+FONT TestFont
+SIZE 10 75 75
+FONTBOUNDINGBOX 6 7 0 0
+CHARS 0
+ENDFONT
+"#;
+
+    let cursor = Cursor::new(bdf.as_bytes());
+    let parsed = BdfParser::parse(cursor).expect("should parse");
+    assert_eq!(parsed.glyphs.len(), 0);
+    assert_eq!(parsed.count, 0);
+}
